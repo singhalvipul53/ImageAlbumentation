@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Welcome to Tweetme 2</h1>
+
+<div id="tweets">Replace Me</div>
+
+<script>
+  const tweetsElement = document.getElementById("tweets");
+  tweetsElement.innerHTML = "Loading...";
+
+  var el1 = "<h1>Hi There</h1>";
+  var el2 = "<h1>Hi There</h1>";
+  var el3 = "<h1>Hi There</h1>";
+  tweetsElement.innerHTML = el1 + el2 + el3;
+
+  const xhr = new XMLHttpRequest(); //xhr=Someclass()
+  const method = "GET";
+  const url = "/tweets";
+  const responseType = "json";
+  xhr.responseType = responseType;
+  xhr.open(method, url);
+  xhr.onload = function () {
+    console.log(xhr.response);
+    const listedItems = xhr.response.response;
+    var finalTweet = "";
+    var i;
+    for (i = 0; i < listedItems.length; i++) {
+      var currentItem =
+        "<h1>" +
+        listedItems[i].id +
+        "<h1>" +
+        "<p>" +
+        listedItems[i].content +
+        "</p>";
+      finalTweet += currentItem;
+    }
+    tweetsElement.innerHTML = finalTweet;
+    console.log(listedItems);
+  };
+  xhr.send();
+</script>
+
+{% endblock content %}
